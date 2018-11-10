@@ -46,7 +46,8 @@ class SignUpForm extends Component {
               "currentUser",
               JSON.stringify(firebase.auth.currentUser)
             );
-            history.push(routes.LANDING);
+            history.push(routes.REGISTER_PARKING);
+            window.location.reload();
           });
       })
       .catch(error => {

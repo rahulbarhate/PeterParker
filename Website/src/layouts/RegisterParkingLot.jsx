@@ -4,6 +4,7 @@ import CustomMapContainer from "./CustomMapWrapper";
 import API_KEY from "../secrets/mapSecrets";
 import { Map, GoogleApiWrapper, Marker, Polygon } from "google-maps-react";
 import { db } from "../firebase/firebase";
+import SearchBar from "./GooglePlacesSearchComponent";
 import * as routes from "../constants/routes";
 import { auth } from "../firebase/firebase";
 class RegisterParkingLotPage extends React.Component {
@@ -21,28 +22,32 @@ class RegisterParkingLotPage extends React.Component {
     };
   }
   componentDidMount = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.setState({
-          lat: position.coords.latitude
+    try {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(position => {
+          this.setState({
+            lat: position.coords.latitude
+          });
+          this.setState({
+            lng: position.coords.longitude
+          });
+          this.setState({
+            mapContainer: (
+              <CustomMapContainer
+                onClick={this.onClickHandler}
+                style={{
+                  position: "absolute",
+                  float: "left"
+                }}
+                latLng={{ lat: position.coords.lat, lng: position.coords.lng }}
+              />
+            )
+          });
         });
-        this.setState({
-          lng: position.coords.longitude
-        });
-        this.setState({
-          mapContainer: (
-            <CustomMapContainer
-              onClick={this.onClickHandler}
-              style={{
-                position: "absolute",
-                float: "left"
-              }}
-              latLng={{ lat: position.coords.lat, lng: position.coords.lng }}
-            />
-          )
-        });
-      });
-    } else {
+      } else {
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
   onMapClick = (mapProps, map, click) => {
@@ -136,7 +141,8 @@ class RegisterParkingLotPage extends React.Component {
             }}
           />
           <br />
-
+          {/* <SearchBar /> */}
+          <br />
           <Button
             className="btn btn-primary"
             color="inherit"

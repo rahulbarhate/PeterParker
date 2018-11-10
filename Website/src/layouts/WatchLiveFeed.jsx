@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { db } from "../firebase/firebase";
+import { firebase } from "../firebase";
 import {
   TextField,
   Card,
@@ -12,16 +13,27 @@ class WatchLiveFeedPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      carCount: 0
+      carCount: 0,
+      cameraFeed1: null,
+      cameraFeed2: null,
+      cameraFeed3: null,
+      cameraFeed4: null
     };
   }
   componentDidMount = () => {
     if (localStorage.getItem("currentUser")) {
-      let currentUser = localStorage.getItem("currentUser");
+      let currentUser = JSON.parse(localStorage.getItem("currentUser"));
       console.log(currentUser);
-      db.ref("ParkingLot/" + 1).on("value", snapshot => {
+      db.ref("ParkingLot/" + currentUser.uid).on("value", snapshot => {
         let res = JSON.parse(snapshot.val());
-        this.setState({ carCount: res.cars.length });
+        console.log(res);
+      });
+      let storage = firebase.storage;
+      db.ref(currentUser.uid + "/" + "stream").once("value", data => {
+        console.log(data.val());
+      });
+      db.ref(currentUser.uid + "/" + "stream").on("child_changed", data => {
+        console.log(data.val());
       });
     }
   };
@@ -51,8 +63,6 @@ class WatchLiveFeedPage extends Component {
                 src={
                   "https://ipfs.io/ipfs/QmTKZgRNwDNZwHtJSjCp6r5FYefzpULfy37JvMt9DwvXse/video.mp4"
                 }
-                component="video"
-                controls
               />
               <CardContent>
                 <Typography>Feed One</Typography>
@@ -63,8 +73,6 @@ class WatchLiveFeedPage extends Component {
                 src={
                   "https://ipfs.io/ipfs/QmTKZgRNwDNZwHtJSjCp6r5FYefzpULfy37JvMt9DwvXse/video.mp4"
                 }
-                component="video"
-                controls
               />
               <CardContent>
                 <Typography>Feed One</Typography>
@@ -84,8 +92,6 @@ class WatchLiveFeedPage extends Component {
                 src={
                   "https://ipfs.io/ipfs/QmTKZgRNwDNZwHtJSjCp6r5FYefzpULfy37JvMt9DwvXse/video.mp4"
                 }
-                component="video"
-                controls
               />
               <CardContent>
                 <Typography>Feed One</Typography>
@@ -96,8 +102,6 @@ class WatchLiveFeedPage extends Component {
                 src={
                   "https://ipfs.io/ipfs/QmTKZgRNwDNZwHtJSjCp6r5FYefzpULfy37JvMt9DwvXse/video.mp4"
                 }
-                component="video"
-                controls
               />
               <CardContent>
                 <Typography>Feed One</Typography>
