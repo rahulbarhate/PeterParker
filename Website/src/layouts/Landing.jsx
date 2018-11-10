@@ -2,9 +2,12 @@ import React from "react";
 import { Card, CardContent } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import ParkingLot from "../utilClasses/ParkingLot";
+import { browserHistory } from "react-router";
+import * as routes from "../constants/routes";
 import { Map, GoogleApiWrapper, Marker, Polygon } from "google-maps-react";
 import MapContainer from "./MapsWrapper";
 import API_KEY from "../secrets/mapSecrets";
+
 import { db } from "../firebase/firebase";
 import firebase from "firebase";
 import { auth } from "../firebase/firebase";
@@ -54,6 +57,9 @@ class LandingPage extends React.Component {
           )
         });
       });
+    } else {
+      browserHistory.push(routes.SIGN_IN);
+      window.location.reload();
     }
   };
   render() {
@@ -61,7 +67,7 @@ class LandingPage extends React.Component {
       <div className="container-fluid" style={{ padding: "5%" }}>
         <div style={{ flexDirection: "column" }}>
           <div className="row">
-            <Card>
+            <Card style={{ margin: 10 }}>
               <CardContent>
                 <Typography variant="h4">
                   Car Count: {this.state.carsCount}
@@ -77,7 +83,11 @@ class LandingPage extends React.Component {
           </div>
         </div>
         <div style={{ maxWidth: 250, width: "25%", marginTop: "2.5%" }}>
-          <Map google={this.props.google} center={this.state.mapCenter}>
+          <Map
+            google={this.props.google}
+            center={this.state.mapCenter}
+            style={{ width: "50%", margin: 10, height: "50%" }}
+          >
             {this.state.polygon}
           </Map>
         </div>
