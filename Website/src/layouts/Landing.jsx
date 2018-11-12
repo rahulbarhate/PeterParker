@@ -11,6 +11,7 @@ import API_KEY from "../secrets/mapSecrets";
 import { db } from "../firebase/firebase";
 import firebase from "firebase";
 import { auth } from "../firebase/firebase";
+import ParkingVisualizationComponent from "./ParkingVisualization";
 class LandingPage extends React.Component {
   constructor(props) {
     super(props);
@@ -82,6 +83,7 @@ class LandingPage extends React.Component {
             </Card>
           </div>
         </div>
+        <ParkingVisualizationComponent />
         <div style={{ maxWidth: 250, width: "25%", marginTop: "2.5%" }}>
           <Map
             google={this.props.google}
