@@ -24,21 +24,22 @@ class ParkingVisualizationComponent extends Component {
           {this.state.full[0].map((value, index) => (
             <div
               style={{
-                float: "left"
+                float: "left",
+                border: "2px solid black"
               }}
             >
-              <VerticalParkingSpot vacant={value} key={index} />
+              <VerticalParkingSpot style={{}} vacant={value} key={index} />
             </div>
           ))}
         </div>
         <br />
-        <div style={{ display: "block" }}>
+        <div>
           {this.state.full[1].map((value, index) => (
             <ParkingSpotComponent vacant={value} key={index} />
           ))}
         </div>
         <br />
-        <div style={{ display: "block" }}>
+        <div style={{}}>
           {this.state.full[2].map((value, index) => (
             <ParkingSpotComponent vacant={value} key={index} />
           ))}
