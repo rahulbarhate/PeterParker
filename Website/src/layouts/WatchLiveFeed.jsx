@@ -63,6 +63,8 @@ class WatchLiveFeedPage extends Component {
                 src={
                   "https://ipfs.io/ipfs/QmTKZgRNwDNZwHtJSjCp6r5FYefzpULfy37JvMt9DwvXse/video.mp4"
                 }
+                component="video"
+                controls
               />
               <CardContent>
                 <Typography>Feed One</Typography>

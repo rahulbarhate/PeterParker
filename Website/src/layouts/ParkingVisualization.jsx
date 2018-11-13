@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import ParkingSpotComponent from "./ParkingSpot";
 import VerticalParkingSpot from "./VerticalParkingSpot";
+import { db } from "../firebase/firebase";
 class ParkingVisualizationComponent extends Component {
+  componentDidMount = () => {
+    db.ref("ParkingLot1").on("value", snapshot => {
+      console.log(JSON.parse(snapshot.val()));
+      this.setState({ full: JSON.parse(snapshot.val()) });
+    });
+  };
   constructor(props) {
     super(props);
-    this.state = { full: [[0, 0], [0, 1, 0, 0], [0, 1]] };
+    this.state = { full: [[0, 0], [0, 0, 0, 0], [0, 0]] };
   }
   render() {
-    const inUseUri =
-      "https://firebasestorage.googleapis.com/v0/b/singapore-a572e.appspot.com/o/car%20red.jpg?alt=media&token=e8763b1b-3007-4d46-8901-bd1fbe674c4b";
-    const vacantUri =
-      "https://firebasestorage.googleapis.com/v0/b/singapore-a572e.appspot.com/o/car%20green.jpg?alt=media&token=1a1e5839-28be-4bb4-974a-b9fe12e62f52";
     return (
       <div>
         <div
@@ -25,7 +28,7 @@ class ParkingVisualizationComponent extends Component {
             <div
               style={{
                 float: "left",
-                border: "2px solid black"
+                border: "2px solid grey"
               }}
             >
               <VerticalParkingSpot style={{}} vacant={value} key={index} />

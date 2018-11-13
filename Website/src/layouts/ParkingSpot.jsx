@@ -27,7 +27,7 @@ class ParkingSpotComponent extends Component {
   };
   render() {
     return (
-      <div style={{ border: "2px solid black", maxWidth: 54 }}>
+      <div style={{ border: "2px solid grey", maxWidth: 54 }}>
         {this.state.Comp}
       </div>
     );
